@@ -49,7 +49,7 @@ class BST {
         };
     };
     //keeps looking for the left node to find the minimum value.
-    findmin(){
+    findMin(){
         let current = this.root;
         while (current.left !== null){
             current = current.left;
@@ -57,7 +57,7 @@ class BST {
         return current.data;
     };
     //keeps looking for the right node for the largest value.
-    findmax(){
+    findMax(){
         let current = this.root;
         while(current.right !== null) {
             current = current.right;
@@ -117,13 +117,39 @@ class BST {
                 };
                 //node has two children
                 var tempNode = node.right;
+                //go down temporary node of the node to be deleted
                 while (tempNode.left !== null) {
                     tempNode = tempNode.left;
                 };
                 node.data = tempNode.data;
+                //uses recursion to set up the new node
                 node.right = removeNode(node.right, tempNode.data);
+                return node;
+            } else if (data < node.data) {
+                node.left = removeNode(node.left, data);
+                return node;
+            } else {
+                node.right = removeNode(node.right, data);
                 return node;
             }
         }
+        this.root = removeNode(this.root, data);
     };
-}
+};
+
+//tests
+const bst = new BST();
+
+bst.add(4);
+bst.add(2);
+bst.add(6);
+bst.add(1);
+bst.add(3);
+bst.add(5);
+bst.add(7);
+bst.remove(4);
+console.log(bst.findMin());
+console.log(bst.findMax());
+bst.remove(7);
+console.log(bst.findMax());
+console.log(bst.isPresent(4));
