@@ -135,6 +135,67 @@ class BST {
         }
         this.root = removeNode(this.root, data);
     };
+    //this method checks if the tree is balanced
+    isBalanced(){
+        return (this.findMinHeight() >= this.findMaxHeight() - 1)
+    };
+    //this method finds the minimum height of the tree
+    findMinHeight(node = this.root){
+        if (node == null){
+            return -1;
+        };
+        let left = this.findMinHeight(node.left);
+        let right = this.findMinHeight(node.right);
+        if (left < right){
+            return left + 1;
+        } else {
+            return right + 1;
+        };
+    };
+    // this method finds the maximum height of the tree
+    findMaxHeight(node = this.root){
+        if (node == null){
+            return - 1;
+        }
+        let left = this.findMaxHeight(node.left);
+        let right = this.findMaxHeight(node.right);
+        if (left > right){
+            return left + 1;
+        } else{
+            return right + 1;
+        };
+    };
+    // this traverses the tree in order
+    inOrder() {
+        if (this.root == null){
+            return null;
+        } else {
+            var result = new Array();
+            function traverseInOrder(node){
+                //&& if the first statement is true it will run the second
+                node.left && traverseInOrder(node.left);
+                result.push(node.data);
+                node.right && traverseInOrder(node.right);
+            };
+            traverseInOrder(this.root);
+            return result;
+        };
+    };
+    //traverses the tree pre order
+    preOrder(){
+        if (this.root == null){
+            return null;
+        } else {
+            var result = new Array();
+            function traversePreOrder(node){
+                result.push(node.data);
+                node.left && traversePreOrder(node.left);
+                node.right && traversePreOrder(node.right);
+            };
+            traversePreOrder(this.root);
+            return result;
+        };
+    };
 };
 
 //tests
@@ -153,3 +214,17 @@ console.log(bst.findMax());
 bst.remove(7);
 console.log(bst.findMax());
 console.log(bst.isPresent(4));
+
+//min-height equal closest distance between root node and a node that isn't full
+//max height equal closest distance between root node and farthest leaf
+//balanced is when the (min height) >= (max height -1)
+
+/* Traversal types
+inOrder: begins at the left most node and ends at the right most node
+        (smallest number to largest number)
+preOrder: focuses on the root nodes first from left to right
+postOrder: focuses on the leaf nodes starting on the left branch then the
+          right branch.
+(left branch leaf, then left parent --> right branch--> root node is last)
+levelOrder: Goes by level from root node to leaflets.
+*/
