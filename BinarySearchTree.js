@@ -196,6 +196,42 @@ class BST {
             return result;
         };
     };
+    //traverse the tree post order
+    postOrder(){
+        if(this.root == null){
+            return null;
+        } else {
+            var result = new Array();
+            function traversePostOrder(node){
+                node.left && traversePostOrder(node.left);
+                node.right && taversePostOrder(node.right);
+                result.push(node.data);
+            };
+            traversePostOrder(this.root);
+            return result;
+        };
+    };
+    // level order functions
+    levelOrder(){
+        let result = [];
+        let Q = [];
+        if (this.root != null) {
+            Q.push(this.root);
+            while(Q.length > 0) {
+                let node = Q.shift(); //takes off first element in array and returns element
+                result.push(node.data);
+                if (node.left != null){
+                    Q.push(node.left);
+                };
+                if (node.right != null){
+                    Q.push(node.right);
+                };
+            };
+            return result;
+        } else{
+            return null;
+        };
+    };
 };
 
 //tests
